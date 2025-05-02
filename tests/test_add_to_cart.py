@@ -26,6 +26,8 @@ def test_add_product_to_cart(driver):
     detail_page = home_page.open_product_detail_by_index(0)
 
     # Add the product to the cart
+    product_name = detail_page.get_product_name()
+    product_isbn = detail_page.get_product_isbn()
     detail_page.click_add_to_cart_button()
 
     # Go to cart page and verify the product has been successfully added to the cart
@@ -36,9 +38,9 @@ def test_add_product_to_cart(driver):
     assert cart_item is not None, "Product was not added to cart"
 
     cart_item_name = cart_page.get_cart_item_name(cart_item)
-    assert cart_item_name.text.strip().lower() == "Children of Time".strip().lower()
+    assert cart_item_name.text.strip().lower() == product_name.lower()
     cart_item_isbn = cart_page.get_cart_item_isbn(cart_item)
-    assert cart_item_isbn.text.strip() == "9780316452502"
+    assert cart_item_isbn.text.strip() == product_isbn
     cart_item_quantity = cart_page.get_cart_item_quantity(cart_item)
     assert cart_item_quantity.get_attribute("value") == "1"
 
